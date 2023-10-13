@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -29,4 +30,26 @@ func IsURL(url string) bool {
 func GetFilenameFromURL(url string) string {
 	splitted := strings.Split(url, "/")
 	return splitted[len(splitted)-1]
+}
+
+func GetFilesWithExtension(dir string, ext string) ([]string, error) {
+	var files []string
+
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if filepath.Ext(path) == ext {
+			files = append(files, path)
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return files, nil
 }
