@@ -1,6 +1,9 @@
 package utils
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 func Must(err error, msg string) {
 	if err == nil {
@@ -13,4 +16,17 @@ func Must(err error, msg string) {
 	}
 
 	panic(err)
+}
+
+func IsURL(url string) bool {
+	if strings.Contains(url, "http://") || strings.Contains(url, "https://") {
+		return true
+	}
+
+	return false
+}
+
+func GetFilenameFromURL(url string) string {
+	splitted := strings.Split(url, "/")
+	return splitted[len(splitted)-1]
 }

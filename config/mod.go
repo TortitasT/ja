@@ -9,7 +9,7 @@ import (
 const ConfigFile = "ja.toml"
 
 type Config struct {
-	Libraries []string
+	Packages []string
 }
 
 func LoadConfig() (Config, error) {

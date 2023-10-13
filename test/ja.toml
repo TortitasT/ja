@@ -1,1 +1,4 @@
-"Libraries" = ["lib1", "lib2"]
+"Packages" = [
+  "https://dlm.mariadb.com/3418100/Connectors/java/connector-java-3.2.0/mariadb-java-client-3.2.0.jar",
+  "lib2",
+]
