@@ -20,8 +20,10 @@ func Install() *cli.Command {
 			cnf, err := config.LoadConfig()
 			utils.Must(err, "failed to load config file, make sure the config file exists and is valid")
 
-			for _, pak := range cnf.Packages {
-				fmt.Printf("Installing %s...\n", pak)
+			packageCount := len(cnf.Packages)
+
+			for i, pak := range cnf.Packages {
+				fmt.Printf("Installing %s [%d/%d]\n", pak, i+1, packageCount)
 				err = downloadPackage(pak)
 				if err != nil {
 					fmt.Printf("Failed to install %s: %s\n", pak, err.Error())
