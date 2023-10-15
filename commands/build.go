@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/tortitast/ja/config"
 	"github.com/tortitast/ja/utils"
 	"github.com/urfave/cli/v2"
 )
@@ -14,18 +15,25 @@ func Build() *cli.Command {
 		Aliases: []string{"b"},
 		Usage:   "build the project into the out directory",
 		Action: func(c *cli.Context) error {
-			os.MkdirAll("out", 0755)
+			bar := utils.NewProgressBar(2)
 
-			includeArg := "vendor:src"
+			os.MkdirAll(config.OutDir, 0755)
 
-			javaFiles, err := utils.GetFilesWithExtension("src", ".java")
+			javaFiles, err := utils.GetFilesWithExtension(config.SrcDir, ".java")
 			utils.Must(err, "failed to get java files")
 
-			cmd := exec.Command("javac", "-d", "out", "-cp", includeArg, javaFiles...)
+			args := []string{"-d", config.OutDir, "-cp", config.SrcDir}
+			args = append(args, javaFiles...)
+
+			utils.StepBar(bar, "Compiling java files...")
+
+			cmd := exec.Command("javac", args...)
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			err = cmd.Run()
 			utils.Must(err, "failed to build project")
+
+			utils.StepBar(bar, "Project built successfully")
 
 			return nil
 		},

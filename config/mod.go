@@ -7,6 +7,10 @@ import (
 )
 
 const ConfigFile = "ja.toml"
+const VendorDir = "vendor"
+const OutDir = "out"
+const SrcDir = "src"
+const MainClass = "app.App"
 
 type Config struct {
 	Packages []string

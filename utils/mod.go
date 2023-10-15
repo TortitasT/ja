@@ -4,6 +4,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/schollz/progressbar/v3"
 )
 
 func Must(err error, msg string) {
@@ -52,4 +54,18 @@ func GetFilesWithExtension(dir string, ext string) ([]string, error) {
 	}
 
 	return files, nil
+}
+
+func NewProgressBar(total int) *progressbar.ProgressBar {
+	return progressbar.Default(int64(total))
+}
+
+func StepBar(bar *progressbar.ProgressBar, msg string) {
+	bar.Describe(msg)
+	bar.Add(1)
+}
+
+func FinishBar(bar *progressbar.ProgressBar, msg string) {
+	bar.Describe(msg)
+	bar.Finish()
 }

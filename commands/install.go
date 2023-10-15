@@ -23,7 +23,7 @@ func Install() *cli.Command {
 			packageCount := len(cnf.Packages)
 
 			for i, pak := range cnf.Packages {
-				fmt.Printf("Installing %s [%d/%d]\n", pak, i+1, packageCount)
+				fmt.Printf("Installing %s [%d/%d]\n", utils.GetFilenameFromURL(pak), i+1, packageCount)
 				err = downloadPackage(pak)
 				if err != nil {
 					fmt.Printf("Failed to install %s: %s\n", pak, err.Error())
@@ -62,8 +62,8 @@ func downloadPackageFromURL(url string) error {
 		return err
 	}
 
-	os.MkdirAll("vendor", 0755)
-	file, err := os.Create("vendor/" + utils.GetFilenameFromURL(url))
+	os.MkdirAll(config.VendorDir, 0755)
+	file, err := os.Create(config.VendorDir + "/" + utils.GetFilenameFromURL(url))
 	if err != nil {
 		return err
 	}

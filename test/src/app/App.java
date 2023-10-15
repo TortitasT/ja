@@ -19,6 +19,9 @@ class App {
 
       Scanner scanner = new Scanner(System.in);
       scanner.next();
+
+      connection.close();
+      scanner.close();
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
