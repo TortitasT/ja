@@ -1,8 +1,9 @@
 package commands
 
 import (
-	"fmt"
+	"os"
 
+	"github.com/tortitast/ja/config"
 	"github.com/urfave/cli/v2"
 )
 
@@ -12,8 +13,27 @@ func Dev() *cli.Command {
 		Aliases: []string{"d"},
 		Usage:   "build and run the project",
 		Action: func(c *cli.Context) error {
-			fmt.Println("Building and running...")
+			if !hasInstalled() {
+				Install().Run(c)
+			}
+
+			Build().Run(c)
+			Run().Run(c)
+
 			return nil
 		},
 	}
+}
+
+func hasInstalled() bool {
+	vendorDirStat, err := os.Stat(config.VendorDir)
+	if err != nil {
+		return false
+	}
+
+	if !vendorDirStat.IsDir() {
+		return false
+	}
+
+	return true
 }

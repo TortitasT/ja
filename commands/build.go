@@ -15,7 +15,7 @@ func Build() *cli.Command {
 		Aliases: []string{"b"},
 		Usage:   "build the project into the out directory",
 		Action: func(c *cli.Context) error {
-			bar := utils.NewProgressBar(2)
+			// bar := utils.NewProgressBar(2)
 
 			os.MkdirAll(config.OutDir, 0755)
 
@@ -25,7 +25,7 @@ func Build() *cli.Command {
 			args := []string{"-d", config.OutDir, "-cp", config.SrcDir}
 			args = append(args, javaFiles...)
 
-			utils.StepBar(bar, "Compiling java files...")
+			// utils.StepBar(bar, "Compiling java files...")
 
 			cmd := exec.Command("javac", args...)
 			cmd.Stdout = os.Stdout
@@ -33,7 +33,7 @@ func Build() *cli.Command {
 			err = cmd.Run()
 			utils.Must(err, "failed to build project")
 
-			utils.StepBar(bar, "Project built successfully")
+			// utils.StepBar(bar, "Project built successfully")
 
 			return nil
 		},
