@@ -16,9 +16,13 @@ func Install() *cli.Command {
 		Name:    "install",
 		Aliases: []string{"i"},
 		Usage:   fmt.Sprintf("install packages declared in the %s file", config.ConfigFile),
+		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			cnf, err := config.LoadConfig()
-			utils.Must(err, "failed to load config file, make sure the config file exists and is valid")
+			if err != nil {
+				fmt.Printf("Failed to load config: %s\n", err.Error())
+				return nil
+			}
 
 			packageCount := len(cnf.Packages)
 

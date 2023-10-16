@@ -14,6 +14,7 @@ func Run() *cli.Command {
 		Name:    "run",
 		Aliases: []string{"r"},
 		Usage:   "run the project from the out directory",
+		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			classPath := config.OutDir
 

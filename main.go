@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"github.com/tortitast/ja/commands"
 	"github.com/urfave/cli/v2"
@@ -10,9 +11,12 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:     "ja",
-		Usage:    "A simple package manager for Java",
-		Commands: commands.CliCommands(),
+		Name:                 "ja",
+		Version:              "1.0.0",
+		Compiled:             time.Now(),
+		EnableBashCompletion: true,
+		Usage:                "A simple package manager for Java",
+		Commands:             commands.CliCommands(),
 	}
 
 	if err := app.Run(os.Args); err != nil {

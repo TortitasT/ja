@@ -12,6 +12,7 @@ func Dev() *cli.Command {
 		Name:    "dev",
 		Aliases: []string{"d"},
 		Usage:   "build and run the project",
+		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			if !hasInstalled() {
 				Install().Run(c)
