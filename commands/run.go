@@ -26,6 +26,7 @@ func Run() *cli.Command {
 			}
 
 			cmd := exec.Command("java", "-cp", classPath, config.MainClass)
+			cmd.Stdin = os.Stdin
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			err = cmd.Run()
