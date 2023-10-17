@@ -13,7 +13,7 @@ func Run() *cli.Command {
 	return &cli.Command{
 		Name:    "run",
 		Aliases: []string{"r"},
-		Usage:   "run the project from the out directory",
+		Usage:   "Run the project from the out directory",
 		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			classPath := config.OutDir

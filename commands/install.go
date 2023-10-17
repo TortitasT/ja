@@ -15,7 +15,7 @@ func Install() *cli.Command {
 	return &cli.Command{
 		Name:    "install",
 		Aliases: []string{"i"},
-		Usage:   fmt.Sprintf("install packages declared in the %s file", config.ConfigFile),
+		Usage:   fmt.Sprintf("Install packages declared in the %s file", config.ConfigFile),
 		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			cnf, err := config.LoadConfig()
