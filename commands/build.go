@@ -13,7 +13,7 @@ func Build() *cli.Command {
 	return &cli.Command{
 		Name:    "build",
 		Aliases: []string{"b"},
-		Usage:   "build the project into the out directory",
+		Usage:   "Build the project into the out directory",
 		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			// bar := utils.NewProgressBar(2)
