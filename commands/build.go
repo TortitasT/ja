@@ -16,7 +16,7 @@ func Build() *cli.Command {
 		Usage:   "Build the project into the out directory",
 		Before:  InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
-			// bar := utils.NewProgressBar(2)
+			utils.Print("Building project...", utils.Info)
 
 			os.MkdirAll(config.OutDir, 0755)
 
@@ -26,15 +26,13 @@ func Build() *cli.Command {
 			args := []string{"-d", config.OutDir, "-cp", config.SrcDir}
 			args = append(args, javaFiles...)
 
-			// utils.StepBar(bar, "Compiling java files...")
-
 			cmd := exec.Command("javac", args...)
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			err = cmd.Run()
 			utils.Must(err, "failed to build project")
 
-			// utils.StepBar(bar, "Project built successfully")
+			utils.Print("Project built successfully!", utils.Success)
 
 			return nil
 		},

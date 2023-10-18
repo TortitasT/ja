@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/pelletier/go-toml/v2"
+	"github.com/tortitast/ja/utils"
 )
 
 const ConfigFile = "ja.toml"
@@ -37,8 +38,7 @@ func NewConfig() (Config, error) {
 }
 
 func ConfigFileExists() bool {
-	_, err := os.Stat(ConfigFile)
-	return !os.IsNotExist(err)
+	return utils.FileExists(ConfigFile)
 }
 
 func LoadConfig() (Config, error) {

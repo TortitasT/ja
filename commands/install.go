@@ -21,17 +21,17 @@ func Install() *cli.Command {
 		Action: func(c *cli.Context) error {
 			cnf, err := config.LoadConfig()
 			if err != nil {
-				fmt.Printf("Failed to load config: %s\n", err.Error())
+				utils.Print(fmt.Sprintf("Failed to load config: %s", err.Error()), utils.Error)
 				return nil
 			}
 
 			packageCount := len(cnf.Packages)
 
 			for i, pak := range cnf.Packages {
-				fmt.Printf("Installing %s [%d/%d]\n", utils.GetFilenameFromURL(pak), i+1, packageCount)
+				utils.Print(fmt.Sprintf("Installing %s [%d/%d]", utils.GetFilenameFromURL(pak), i+1, packageCount), utils.Info)
 				err = downloadPackage(pak)
 				if err != nil {
-					fmt.Printf("Failed to install %s: %s\n", pak, err.Error())
+					utils.Print(fmt.Sprintf("Failed to install %s: %s", pak, err.Error()), utils.Error)
 				}
 			}
 

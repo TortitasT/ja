@@ -1,12 +1,11 @@
 package utils
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
-
-	"github.com/schollz/progressbar/v3"
 )
 
 func Must(err error, msg string) {
@@ -15,7 +14,7 @@ func Must(err error, msg string) {
 	}
 
 	if msg != "" {
-		println(msg)
+		Print(msg, Error)
 		os.Exit(1)
 	}
 
@@ -57,20 +56,6 @@ func GetFilesWithExtension(dir string, ext string) ([]string, error) {
 	return files, nil
 }
 
-func NewProgressBar(total int) *progressbar.ProgressBar {
-	return progressbar.Default(int64(total))
-}
-
-func StepBar(bar *progressbar.ProgressBar, msg string) {
-	bar.Describe(msg)
-	bar.Add(1)
-}
-
-func FinishBar(bar *progressbar.ProgressBar, msg string) {
-	bar.Describe(msg)
-	bar.Finish()
-}
-
 func HasBinary(name string) bool {
 	_, err := exec.LookPath(name)
 	return err == nil
@@ -88,4 +73,23 @@ func Unzip(src string, dest string) error {
 	}
 
 	return nil
+}
+
+func FileExists(path string) bool {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return false
+	}
+
+	return true
+}
+
+const (
+	Success = "\033[32m✔ %s\033[0m"
+	Info    = "\033[34mi %s\033[0m"
+	Error   = "\033[31m✘ %s\033[0m"
+	Warning = "\033[33m⚠ %s\033[0m"
+)
+
+func Print(msg string, status string) {
+	fmt.Printf(status+"\n", msg)
 }

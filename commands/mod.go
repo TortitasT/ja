@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/tortitast/ja/config"
+	"github.com/tortitast/ja/utils"
 	"github.com/urfave/cli/v2"
 )
 
@@ -21,7 +22,7 @@ func CliCommands() []*cli.Command {
 func InProjectDirectoryMiddleware() cli.BeforeFunc {
 	return func(c *cli.Context) error {
 		if !config.ConfigFileExists() {
-			fmt.Printf("Config file %s does not exist in current directory.\nType `ja init` to initialize a project.\n", config.ConfigFile)
+			utils.Print(fmt.Sprintf("Config file %s does not exist in current directory.\nType `ja init` to initialize a project.\n", config.ConfigFile), utils.Error)
 			os.Exit(1)
 		}
 
