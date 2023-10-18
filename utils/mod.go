@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 
@@ -68,4 +69,23 @@ func StepBar(bar *progressbar.ProgressBar, msg string) {
 func FinishBar(bar *progressbar.ProgressBar, msg string) {
 	bar.Describe(msg)
 	bar.Finish()
+}
+
+func HasBinary(name string) bool {
+	_, err := exec.LookPath(name)
+	return err == nil
+}
+
+func Unzip(src string, dest string) error {
+	if !HasBinary("unzip") {
+		return exec.ErrNotFound
+	}
+
+	cmd := exec.Command("unzip", src, "-d", dest)
+	err := cmd.Run()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

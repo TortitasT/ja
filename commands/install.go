@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/tortitast/ja/config"
 	"github.com/tortitast/ja/utils"
@@ -66,8 +67,12 @@ func downloadPackageFromURL(url string) error {
 		return err
 	}
 
+	defer data.Body.Close()
+
+	filename := utils.GetFilenameFromURL(url)
+
 	os.MkdirAll(config.VendorDir, 0755)
-	file, err := os.Create(config.VendorDir + "/" + utils.GetFilenameFromURL(url))
+	file, err := os.Create(config.VendorDir + "/" + filename)
 	if err != nil {
 		return err
 	}
@@ -77,6 +82,34 @@ func downloadPackageFromURL(url string) error {
 	_, err = io.Copy(file, data.Body)
 	if err != nil {
 		return err
+	}
+
+	if strings.HasSuffix(url, ".zip") {
+		tempDir := config.VendorDir + "/temp"
+
+		err = utils.Unzip(config.VendorDir+"/"+filename, tempDir)
+		if err != nil {
+			return err
+		}
+
+		defer os.RemoveAll(tempDir)
+		defer os.RemoveAll(config.VendorDir + "/" + filename)
+
+		files, err := utils.GetFilesWithExtension(tempDir, ".jar")
+		if err != nil {
+			return err
+		}
+
+		if len(files) == 0 {
+			return fmt.Errorf("no jar files found in the package")
+		}
+
+		for _, file := range files {
+			err = os.Rename(file, config.VendorDir+"/"+utils.GetFilenameFromURL(file))
+			if err != nil {
+				return err
+			}
+		}
 	}
 
 	return nil
