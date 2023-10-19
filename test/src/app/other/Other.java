@@ -1,7 +1,7 @@
 package app.other;
 
 public class Other {
-  public static void mojon() {
-    System.out.println("mojon");
+  public static void run() {
+    System.out.println("Internal package works!");
   }
 }

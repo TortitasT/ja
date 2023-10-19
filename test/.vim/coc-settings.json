@@ -1,0 +1,4 @@
+{
+  "java.enabled": true,
+  "java.project.referencedLibraries": ["vendor/*.jar"]
+}

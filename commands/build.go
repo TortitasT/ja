@@ -15,9 +15,15 @@ func Build() *cli.Command {
 		Name:    "build",
 		Aliases: []string{"b"},
 		Usage:   "Build the project into the out directory",
-		Before:  InProjectDirectoryMiddleware(),
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "verbose",
+				Aliases: []string{"v"},
+				Usage:   "Verbose output",
+			},
+		},
+		Before: InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
-			utils.Print("Building project...", utils.Info)
 
 			classPath := "./" + config.OutDir
 
@@ -38,10 +44,14 @@ func Build() *cli.Command {
 
 			cmd := exec.Command("javac", args...)
 
-			fmt.Println(cmd.String())
+			if c.Bool("verbose") {
+				fmt.Println(cmd.String())
+			}
 
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
+
+			utils.Print("Building project...", utils.Info)
 			err = cmd.Run()
 			utils.Must(err, "failed to build project")
 
