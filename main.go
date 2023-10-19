@@ -12,7 +12,7 @@ import (
 func main() {
 	app := &cli.App{
 		Name:                 "ja",
-		Version:              "1.2.0",
+		Version:              "1.3.0",
 		Compiled:             time.Now(),
 		EnableBashCompletion: true,
 		Usage:                "A simple package manager for Java",
