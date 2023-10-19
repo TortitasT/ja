@@ -49,7 +49,22 @@ func downloadPackage(pak string) error {
 }
 
 func downloadPackageFromRegistry(pak string) error {
-	return fmt.Errorf("not implemented yet")
+	repoUrl := "https://repo1.maven.org/maven2"
+
+	pakSplit := strings.Split(pak, ":")
+
+	pakNamespace := pakSplit[0]
+	pakName := pakSplit[1]
+	pakVersion := pakSplit[2]
+
+	pakPath := fmt.Sprintf("%s/%s/%s/%s/%s-%s.jar", repoUrl, strings.ReplaceAll(pakNamespace, ".", "/"), pakName, pakVersion, pakName, pakVersion)
+
+	err := downloadPackageFromURL(pakPath)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func downloadPackageFromURL(url string) error {

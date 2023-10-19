@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 
@@ -14,7 +15,14 @@ func Run() *cli.Command {
 		Name:    "run",
 		Aliases: []string{"r"},
 		Usage:   "Run the project from the out directory",
-		Before:  InProjectDirectoryMiddleware(),
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "verbose",
+				Aliases: []string{"v"},
+				Usage:   "Verbose output",
+			},
+		},
+		Before: InProjectDirectoryMiddleware(),
 		Action: func(c *cli.Context) error {
 			classPath := config.OutDir
 
@@ -26,6 +34,11 @@ func Run() *cli.Command {
 			}
 
 			cmd := exec.Command("java", "-cp", classPath, config.MainClass)
+
+			if c.Bool("verbose") {
+				fmt.Println(cmd.String())
+			}
+
 			cmd.Stdin = os.Stdin
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
