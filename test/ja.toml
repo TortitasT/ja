@@ -1,4 +1,4 @@
 packages = [
   "https://dlm.mariadb.com/3418100/Connectors/java/connector-java-3.2.0/mariadb-java-client-3.2.0.jar",
-  "lib2",
+  "org.apache.httpcomponents.client5:httpclient5:5.2.1",
 ]

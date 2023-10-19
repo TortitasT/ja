@@ -18,18 +18,20 @@ func Run() *cli.Command {
 		Action: func(c *cli.Context) error {
 			classPath := config.OutDir
 
-			vendorFiles, err := utils.GetFilesWithExtension(config.VendorDir, ".jar")
-			utils.Must(err, "failed to get jar files")
+			// vendorFiles, err := utils.GetFilesWithExtension(config.VendorDir, ".jar")
+			// utils.Must(err, "failed to get jar files")
 
-			for _, file := range vendorFiles {
-				classPath += ":" + file
-			}
+			// for _, file := range vendorFiles {
+			// 	classPath += ":" + file
+			// }
+
+			classPath += ":" + config.VendorDir + "/*"
 
 			cmd := exec.Command("java", "-cp", classPath, config.MainClass)
 			cmd.Stdin = os.Stdin
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
-			err = cmd.Run()
+			err := cmd.Run()
 			utils.Must(err, "failed to run project")
 
 			return nil
