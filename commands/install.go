@@ -65,7 +65,6 @@ func downloadPackageFromRegistry(pak string) error {
 	}
 
 	return nil
-	// return fmt.Errorf("not implemented yet")
 }
 
 func downloadPackageFromURL(url string) error {
