@@ -1,2 +1,2 @@
-subcommand "build"
-subcommand "run"
+call "build"
+call "run"

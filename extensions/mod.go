@@ -15,12 +15,10 @@ func EvalExtension(c *cli.Context, commands []*cli.Command, name string) {
 	utils.Must(err, "Error getting extensions")
 
 	l := lua.NewState()
-	l.SetGlobal("subcommand", l.NewFunction(func(L *lua.LState) int {
-		return Subcommand(c, commands, L)
-	}))
+
+	registerGlobals(c, commands, l)
 
 	found := false
-
 	for _, file := range files {
 		filename := utils.GetFilenameFromURL(file)
 
@@ -46,7 +44,14 @@ func EvalExtension(c *cli.Context, commands []*cli.Command, name string) {
 	}
 }
 
-func Subcommand(c *cli.Context, commands []*cli.Command, L *lua.LState) int {
+func registerGlobals(c *cli.Context, commands []*cli.Command, L *lua.LState) {
+
+	L.SetGlobal("call", L.NewFunction(func(L *lua.LState) int {
+		return call(c, commands, L)
+	}))
+}
+
+func call(c *cli.Context, commands []*cli.Command, L *lua.LState) int {
 	name := L.ToString(1)
 
 	for _, command := range commands {
