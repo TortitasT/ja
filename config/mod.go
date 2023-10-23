@@ -12,6 +12,7 @@ const VendorDir = "vendor"
 const OutDir = "out"
 const SrcDir = "src"
 const MainClass = "app.App"
+const ExtensionsDir = "extensions"
 
 type Config struct {
 	Packages []string `toml:"packages"`

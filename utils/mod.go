@@ -93,3 +93,14 @@ const (
 func Print(msg string, status string) {
 	fmt.Printf(status+"\n", msg)
 }
+
+func Prompt(msg string) string {
+	Print(msg, Info)
+
+	var response string
+
+	Print("y/n: ", Info)
+	fmt.Scanln(&response)
+
+	return response
+}
