@@ -14,7 +14,6 @@ func CliCommands() []*cli.Command {
 		Install(),
 		Build(),
 		Run(),
-		Dev(),
 		Init(),
 		Extensions(),
 	}
