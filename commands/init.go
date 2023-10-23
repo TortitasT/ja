@@ -1,8 +1,6 @@
 package commands
 
 import (
-	"fmt"
-
 	"github.com/tortitast/ja/config"
 	"github.com/tortitast/ja/utils"
 	"github.com/urfave/cli/v2"
@@ -19,8 +17,8 @@ func Init() *cli.Command {
 				return nil
 			}
 
-			config.NewConfig()
-			fmt.Printf("Created %s\n", config.ConfigFile)
+			utils.Print("Initializing project...", utils.Info)
+			utils.CopyDir(utils.ExpandPath(config.TemplateDir), ".")
 
 			return nil
 		},

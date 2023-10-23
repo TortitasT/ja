@@ -1,4 +1,4 @@
 {
-  "java.enabled": true,
+  "java.project.sourcePaths": ["src"],
   "java.project.referencedLibraries": ["vendor/*.jar"]
 }

@@ -13,6 +13,7 @@ const OutDir = "out"
 const SrcDir = "src"
 const MainClass = "app.App"
 const ExtensionsDir = "extensions"
+const TemplateDir = "$HOME/.config/ja/template"
 
 type Config struct {
 	Packages []string `toml:"packages"`

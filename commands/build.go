@@ -28,7 +28,9 @@ func Build() *cli.Command {
 			classPath := "./" + config.OutDir
 
 			vendorFiles, err := utils.GetFilesWithExtension(config.VendorDir, ".jar")
-			utils.Must(err, "failed to get jar files")
+			if err != nil {
+				utils.Print("No vendor files found", utils.Warning)
+			}
 
 			for _, file := range vendorFiles {
 				classPath += ":./" + file

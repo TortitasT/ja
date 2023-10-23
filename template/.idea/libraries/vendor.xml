@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="vendor">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/vendor/mysql-connector-j-8.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/vendor/mariadb-java-client-3.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

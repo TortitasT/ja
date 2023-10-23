@@ -5,6 +5,9 @@ if [ "$1" != "--local" ]; then
   cd /tmp/ja-install
 fi
 
+mkdir -p ~/.config/ja
+cp -r ./template ~/.config/ja/template
+
 go build
 sudo mv ja /usr/local/bin
 rm -rf /tmp/ja-install

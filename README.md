@@ -10,7 +10,8 @@ With `wget`, this is the recommended way.
 wget -O - https://raw.githubusercontent.com/tortitast/ja/master/install.sh | bash
 ```
 
-With `go install`, fails often while trying to upgrade.
+With `go install`, fails often while trying to upgrade. And `init` subcommand
+won't work.
 
 ```bash
 go install github.com/tortitast/ja@latest
