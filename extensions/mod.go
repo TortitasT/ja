@@ -45,9 +45,13 @@ func EvalExtension(c *cli.Context, commands []*cli.Command, name string) {
 }
 
 func registerGlobals(c *cli.Context, commands []*cli.Command, L *lua.LState) {
-
 	L.SetGlobal("call", L.NewFunction(func(L *lua.LState) int {
 		return call(c, commands, L)
+	}))
+
+	argscpy := c.Args().Slice()
+	L.SetGlobal("args", L.NewFunction(func(L *lua.LState) int {
+		return args(argscpy, L)
 	}))
 }
 
@@ -61,5 +65,16 @@ func call(c *cli.Context, commands []*cli.Command, L *lua.LState) int {
 		}
 	}
 
+	return 1
+}
+
+func args(args []string, L *lua.LState) int {
+	table := L.NewTable()
+
+	for _, arg := range args {
+		table.Append(lua.LString(arg))
+	}
+
+	L.Push(table)
 	return 1
 }
